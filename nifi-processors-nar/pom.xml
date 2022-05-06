@@ -24,6 +24,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.nifi</groupId>
@@ -40,9 +41,9 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <copy file="${project.build.directory}/${project.artifactId}-${project.version}.nar"
-                                      tofile="${project.build.directory}/${project.groupId}.nifi-processors-${project.version}.nar" />
-                                <delete file="${project.build.directory}/${project.artifactId}-${project.version}.nar" />
+                                <copy file="${project.build.directory}/${project.artifactId}.nar"
+                                      tofile="${project.build.directory}/${project.groupId}.nifi-processors.nar" />
+                                <delete file="${project.build.directory}/${project.artifactId}.nar" />
                             </target>
                         </configuration>
                         <goals>

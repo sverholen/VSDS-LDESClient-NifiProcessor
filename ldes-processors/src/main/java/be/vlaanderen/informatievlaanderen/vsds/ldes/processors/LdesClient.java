@@ -14,13 +14,11 @@ import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.exception.ProcessException;
 
-
 import java.util.List;
 import java.util.Set;
 
-import static be.vlaanderen.informatievlaanderen.ldes.client.config.LdesProcessorProperties.DATASOURCE_URL;
-import static be.vlaanderen.informatievlaanderen.ldes.client.config.LdesProcessorProperties.TREE_DIRECTION;
-import static be.vlaanderen.informatievlaanderen.ldes.client.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
+import static be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config.LdesProcessorProperties.DATASOURCE_URL;
+import static be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
 
 @Tags({"ldes-client, vsds"})
 @CapabilityDescription("Takes in an LDES source and passes its individual LDES members")
@@ -35,17 +33,12 @@ public class LdesClient extends AbstractProcessor {
 
     @Override
     public final List<PropertyDescriptor> getSupportedPropertyDescriptors() {
-        return List.of(DATASOURCE_URL, TREE_DIRECTION);
+        return List.of(DATASOURCE_URL);
     }
 
     @OnScheduled
     public void onScheduled(final ProcessContext context) {
-        if (context.getProperty(TREE_DIRECTION).isSet()) {
-            ldesService = new LdesServiceImpl(context.getProperty(TREE_DIRECTION).getValue(), context.getProperty(DATASOURCE_URL).getValue());
-        } else {
-            ldesService = new LdesServiceImpl(context.getProperty(DATASOURCE_URL).getValue());
-        }
-
+        ldesService = new LdesServiceImpl(context.getProperty(DATASOURCE_URL).getValue());
     }
 
     @Override

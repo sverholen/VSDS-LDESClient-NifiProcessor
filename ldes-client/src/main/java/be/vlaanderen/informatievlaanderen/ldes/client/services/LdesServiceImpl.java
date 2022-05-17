@@ -10,13 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.*;
+
 public class LdesServiceImpl implements LdesService {
+    private static final Resource ANY = null;
 
     private final StateManager stateManager;
-
-    public LdesServiceImpl(String treeDirection, String initialPageUrl) {
-        stateManager = new StateManager(treeDirection, initialPageUrl);
-    }
 
     public LdesServiceImpl(String initialPageUrl) {
         stateManager = new StateManager(initialPageUrl);
@@ -49,14 +48,9 @@ public class LdesServiceImpl implements LdesService {
         return stateManager.hasPagesToProcess();
     }
 
-    @Override
-    public String getNextPageUrl() {
-        return stateManager.getNextPageToProcess();
-    }
-
     private List<String[]> processMembers(Model model) {
         List<String[]> ldesMembers = new LinkedList<>();
-        StmtIterator iter = model.listStatements(null, model.createProperty("https://w3id.org/tree#", "member"), (String) null);
+        StmtIterator iter = model.listStatements(ANY, W3ID_TREE_MEMBER, ANY);
 
         iter.forEach(statement -> {
             if (stateManager.processMember(statement.getObject().toString())) {
@@ -66,7 +60,7 @@ public class LdesServiceImpl implements LdesService {
 
                 StringWriter outputStream = new StringWriter();
 
-                RDFDataMgr.write(outputStream, outputModel, Lang.NQUADS);
+                RDFDataMgr.write(outputStream, outputModel, Lang.JSONLD11);
 
                 ldesMembers.add(outputStream.toString().split("\n"));
             }
@@ -76,17 +70,10 @@ public class LdesServiceImpl implements LdesService {
     }
 
     private void processRelations(Model model) {
-        List<Statement> relations = model.listStatements(null, model.createProperty("https://w3id.org/tree#", "relation"), (String) null).toList();
-        if (stateManager.getTreeDirection() != null) {
-            relations = relations.stream()
-                    .filter(relation -> Objects.equals(relation.getResource()
-                            .getProperty(model.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type"))
-                            .getObject().toString(), "https://w3id.org/tree#" + stateManager.getTreeDirection()))
-                    .toList();
-        }
+        List<Statement> relations = model.listStatements(ANY, W3ID_TREE_RELATION, ANY).toList();
 
         relations.forEach(relation -> stateManager.addNewPageToProcess(relation.getResource()
-                .getProperty(model.createProperty("https://w3id.org/tree#", "node"))
+                .getProperty(W3ID_TREE_NODE)
                 .getResource()
                 .toString()));
     }

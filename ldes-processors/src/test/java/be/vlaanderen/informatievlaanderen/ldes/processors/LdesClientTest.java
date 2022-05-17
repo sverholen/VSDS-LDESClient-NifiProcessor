@@ -15,39 +15,34 @@ package be.vlaanderen.informatievlaanderen.ldes.processors;/*
  * limitations under the License.
  */
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-
 import be.vlaanderen.informatievlaanderen.vsds.ldes.processors.LdesClient;
 
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static be.vlaanderen.informatievlaanderen.ldes.client.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+@WireMockTest(httpPort = 8089)
 public class LdesClientTest {
 
     private TestRunner testRunner;
 
-    @Before
+    @BeforeEach
     public void init() {
         testRunner = TestRunners.newTestRunner(LdesClient.class);
     }
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089);
-
     @Test
-    public void when_initiatingLdesClientWithNoTreeDirection_expectsLdesMembersFromAllDirections() {
+    void when_initiatingLdesClientWithNoTreeDirection_expectsLdesMembersFromAllDirections() {
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-03T00:00:00.000Z")
                 .willReturn(aResponse().withStatus(200)));
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z")
@@ -62,27 +57,7 @@ public class LdesClientTest {
         List<MockFlowFile> dataFlowfiles = testRunner.getFlowFilesForRelationship(DATA_RELATIONSHIP);
 
         assertEquals(dataFlowfiles.size(), 6);
-        assertTrue(dataFlowfiles.stream().allMatch(x-> new String(x.getData()).contains("https://w3id.org/tree#member")));
-    }
-
-    @Test
-    public void when_initiatingLdesClientWithTreeDirection_expectsOnlyLdesMembersFromDirection() {
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-03T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-05T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-
-        testRunner.setProperty("DATASOURCE_URL", "http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z");
-        testRunner.setProperty("TREE_DIRECTION", "GreaterThanRelation");
-
-        testRunner.run(10);
-
-        List<MockFlowFile> dataFlowfiles = testRunner.getFlowFilesForRelationship(DATA_RELATIONSHIP);
-
-        assertEquals(dataFlowfiles.size(), 4);
-        assertTrue(dataFlowfiles.stream().allMatch(x-> new String(x.getData()).contains("https://w3id.org/tree#member")));
+        assertTrue(dataFlowfiles.stream().allMatch(x -> new String(x.getData()).contains("https://w3id.org/tree#member")));
     }
 
 

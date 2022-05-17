@@ -9,7 +9,6 @@ public class StateManager {
     private final Queue<String> fragmentsToProcessQueue;
     protected final Set<String> processedFragments;
     protected final Set<String> processedMembers;
-    private String treeDirection;
     private boolean fullyReplayed;
 
     public StateManager(String initialFragmentToProcess) {
@@ -17,11 +16,6 @@ public class StateManager {
         this.fragmentsToProcessQueue.add(initialFragmentToProcess);
         this.processedMembers = new HashSet<>();
         this.processedFragments = new HashSet<>();
-    }
-
-    public StateManager(String initialFragmentToProcess, String treeDirection) {
-        this(initialFragmentToProcess);
-        this.treeDirection = treeDirection;
     }
 
     public boolean processMember(String member) {
@@ -45,10 +39,6 @@ public class StateManager {
         if(!processedFragments.contains(pageUrl)) {
             fragmentsToProcessQueue.add(pageUrl);
         }
-    }
-
-    public String getTreeDirection() {
-        return treeDirection;
     }
 
     public boolean isFullyReplayed() {

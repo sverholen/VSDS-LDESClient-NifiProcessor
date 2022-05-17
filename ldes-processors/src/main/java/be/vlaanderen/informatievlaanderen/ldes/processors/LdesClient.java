@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import static be.vlaanderen.informatievlaanderen.ldes.processors.config.LdesProcessorProperties.DATASOURCE_URL;
-import static be.vlaanderen.informatievlaanderen.ldes.processors.config.LdesProcessorProperties.TREE_DIRECTION;
 import static be.vlaanderen.informatievlaanderen.ldes.processors.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
 
 @Tags({"ldes-client, vsds"})
@@ -33,16 +32,12 @@ public class LdesClient extends AbstractProcessor {
 
     @Override
     public final List<PropertyDescriptor> getSupportedPropertyDescriptors() {
-        return List.of(DATASOURCE_URL, TREE_DIRECTION);
+        return List.of(DATASOURCE_URL);
     }
 
     @OnScheduled
     public void onScheduled(final ProcessContext context) {
-        if (context.getProperty(TREE_DIRECTION).isSet()) {
-            ldesService = new LdesServiceImpl(context.getProperty(DATASOURCE_URL).getValue(), context.getProperty(TREE_DIRECTION).getValue());
-        } else {
-            ldesService = new LdesServiceImpl(context.getProperty(DATASOURCE_URL).getValue());
-        }
+        ldesService = new LdesServiceImpl(context.getProperty(DATASOURCE_URL).getValue());
     }
 
     @Override

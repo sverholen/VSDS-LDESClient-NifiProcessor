@@ -17,10 +17,6 @@ public class LdesServiceImpl implements LdesService {
 
     private final StateManager stateManager;
 
-    public LdesServiceImpl(String initialPageUrl, String treeDirection) {
-        stateManager = new StateManager(initialPageUrl, treeDirection);
-    }
-
     public LdesServiceImpl(String initialPageUrl) {
         stateManager = new StateManager(initialPageUrl);
     }
@@ -75,13 +71,6 @@ public class LdesServiceImpl implements LdesService {
 
     private void processRelations(Model model) {
         List<Statement> relations = model.listStatements(ANY, W3ID_TREE_RELATION, ANY).toList();
-        if (stateManager.getTreeDirection() != null) {
-            relations = relations.stream()
-                    .filter(relation -> Objects.equals(relation.getResource()
-                            .getProperty(RDF_TYPE)
-                            .getObject().toString(), W3C_TREE + stateManager.getTreeDirection()))
-                    .toList();
-        }
 
         relations.forEach(relation -> stateManager.addNewPageToProcess(relation.getResource()
                 .getProperty(W3ID_TREE_NODE)

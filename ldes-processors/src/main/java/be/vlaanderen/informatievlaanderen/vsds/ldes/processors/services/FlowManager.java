@@ -1,4 +1,4 @@
-package be.vlaanderen.informatievlaanderen.ldes.processors.services;
+package be.vlaanderen.informatievlaanderen.vsds.ldes.processors.services;
 
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.flowfile.attributes.CoreAttributes;

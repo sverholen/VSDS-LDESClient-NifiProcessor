@@ -1,4 +1,4 @@
-package be.vlaanderen.informatievlaanderen.ldes.client.config;
+package be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config;
 
 import be.vlaanderen.informatievlaanderen.ldes.client.models.TreeDirection;
 import org.apache.nifi.components.PropertyDescriptor;

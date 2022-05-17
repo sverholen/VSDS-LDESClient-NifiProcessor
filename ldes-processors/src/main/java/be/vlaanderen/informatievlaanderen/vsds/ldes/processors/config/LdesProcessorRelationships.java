@@ -1,4 +1,4 @@
-package be.vlaanderen.informatievlaanderen.ldes.client.config;
+package be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config;
 
 import org.apache.nifi.processor.Relationship;
 

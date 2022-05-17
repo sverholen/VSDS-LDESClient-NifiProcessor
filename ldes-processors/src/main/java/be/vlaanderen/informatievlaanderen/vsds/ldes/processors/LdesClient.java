@@ -1,8 +1,9 @@
-package be.vlaanderen.informatievlaanderen.ldes.processors;
+package be.vlaanderen.informatievlaanderen.vsds.ldes.processors;
 
 import be.vlaanderen.informatievlaanderen.ldes.client.services.LdesService;
 import be.vlaanderen.informatievlaanderen.ldes.client.services.LdesServiceImpl;
-import be.vlaanderen.informatievlaanderen.ldes.processors.services.FlowManager;
+import be.vlaanderen.informatievlaanderen.vsds.ldes.processors.services.FlowManager;
+
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;

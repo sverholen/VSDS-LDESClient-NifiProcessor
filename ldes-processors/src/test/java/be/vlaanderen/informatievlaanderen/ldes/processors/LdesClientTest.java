@@ -16,6 +16,9 @@ package be.vlaanderen.informatievlaanderen.ldes.processors;/*
  */
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+
+import be.vlaanderen.informatievlaanderen.vsds.ldes.processors.LdesClient;
+
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;

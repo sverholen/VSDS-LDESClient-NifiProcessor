@@ -16,12 +16,12 @@ package be.vlaanderen.informatievlaanderen.ldes.processors;/*
  */
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -30,21 +30,18 @@ import static be.vlaanderen.informatievlaanderen.ldes.client.config.LdesProcesso
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+@WireMockTest(httpPort = 8089)
 public class LdesClientTest {
 
     private TestRunner testRunner;
 
-    @Before
+    @BeforeEach
     public void init() {
         testRunner = TestRunners.newTestRunner(LdesClient.class);
     }
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089);
-
     @Test
-    public void when_initiatingLdesClientWithNoTreeDirection_expectsLdesMembersFromAllDirections() {
+    void when_initiatingLdesClientWithNoTreeDirection_expectsLdesMembersFromAllDirections() {
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-03T00:00:00.000Z")
                 .willReturn(aResponse().withStatus(200)));
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z")
@@ -63,7 +60,7 @@ public class LdesClientTest {
     }
 
     @Test
-    public void when_initiatingLdesClientWithTreeDirection_expectsOnlyLdesMembersFromDirection() {
+    void when_initiatingLdesClientWithTreeDirection_expectsOnlyLdesMembersFromDirection() {
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-03T00:00:00.000Z")
                 .willReturn(aResponse().withStatus(200)));
         stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z")

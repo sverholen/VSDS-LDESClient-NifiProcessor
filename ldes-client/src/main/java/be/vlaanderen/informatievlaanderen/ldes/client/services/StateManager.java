@@ -19,11 +19,8 @@ public class StateManager {
         this.processedFragments = new HashSet<>();
     }
 
-    public StateManager(String treeDirection, String initialFragmentToProcess) {
-        this.fragmentsToProcessQueue = new ArrayDeque<>();
-        this.fragmentsToProcessQueue.add(initialFragmentToProcess);
-        this.processedMembers = new HashSet<>();
-        this.processedFragments = new HashSet<>();
+    public StateManager(String initialFragmentToProcess, String treeDirection) {
+        this(initialFragmentToProcess);
         this.treeDirection = treeDirection;
     }
 

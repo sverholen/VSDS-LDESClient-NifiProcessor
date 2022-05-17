@@ -15,7 +15,7 @@
         <nifi-api.version>1.16.0</nifi-api.version>
         <nifi-utils.version>1.16.0</nifi-utils.version>
         <nifi-mock.version>1.16.0</nifi-mock.version>
-        <junit.version>4.13.2</junit.version>
+        <junit-jupiter-api.version>5.8.2</junit-jupiter-api.version>
         <wiremock-jre8.version>2.33.2</wiremock-jre8.version>
     </properties>
 
@@ -45,9 +45,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-api.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

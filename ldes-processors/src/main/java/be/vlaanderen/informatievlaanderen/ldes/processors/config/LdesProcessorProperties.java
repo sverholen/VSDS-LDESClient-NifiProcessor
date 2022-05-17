@@ -1,6 +1,6 @@
-package be.vlaanderen.informatievlaanderen.ldes.client.config;
+package be.vlaanderen.informatievlaanderen.ldes.processors.config;
 
-import be.vlaanderen.informatievlaanderen.ldes.client.models.TreeDirection;
+import be.vlaanderen.informatievlaanderen.ldes.processors.config.TreeDirection;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.processor.util.StandardValidators;
 

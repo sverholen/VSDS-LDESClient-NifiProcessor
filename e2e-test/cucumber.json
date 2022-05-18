@@ -1,0 +1,8 @@
+{
+  "default": {
+    "publishQuiet": true,
+    "formatOptions": {
+      "snippetInterface": "synchronous"
+    }
+  }
+}

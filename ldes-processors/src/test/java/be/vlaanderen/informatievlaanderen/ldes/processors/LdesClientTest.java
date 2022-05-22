@@ -15,21 +15,21 @@ package be.vlaanderen.informatievlaanderen.ldes.processors;/*
  * limitations under the License.
  */
 
-import be.vlaanderen.informatievlaanderen.vsds.ldes.processors.LdesClient;
+import static be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import java.util.List;
+
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 
-import static be.vlaanderen.informatievlaanderen.vsds.ldes.processors.config.LdesProcessorRelationships.DATA_RELATIONSHIP;
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import be.vlaanderen.informatievlaanderen.vsds.ldes.processors.LdesClient;
 
 @WireMockTest(httpPort = 8089)
 public class LdesClientTest {
@@ -43,13 +43,6 @@ public class LdesClientTest {
 
     @Test
     void when_initiatingLdesClientWithNoTreeDirection_expectsLdesMembersFromAllDirections() {
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-03T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-        stubFor(get("http://localhost:8089/exampleData?generatedAtTime=2022-05-05T00:00:00.000Z")
-                .willReturn(aResponse().withStatus(200)));
-
         testRunner.setProperty("DATASOURCE_URL", "http://localhost:8089/exampleData?generatedAtTime=2022-05-04T00:00:00.000Z");
 
         testRunner.run(10);

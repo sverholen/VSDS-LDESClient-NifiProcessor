@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>be.vlaanderen.informatievlaanderen.vsds</groupId>
 		<artifactId>ldes-processors-bundle</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
     <artifactId>ldes-client</artifactId>
@@ -27,15 +27,19 @@
 		<dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>apache-jena-libs</artifactId>
-            <type>pom</type>
         </dependency>
 
         <!-- ############################################################## -->
-		<!-- NIFI -->
+		<!-- TESTING -->
 		<!-- ############################################################## -->
 		<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

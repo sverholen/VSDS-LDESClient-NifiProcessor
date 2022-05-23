@@ -1,6 +1,9 @@
 package be.vlaanderen.informatievlaanderen.ldes.client.services;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+
+import be.vlaanderen.informatievlaanderen.ldes.client.services.LdesServiceImpl;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;

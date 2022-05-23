@@ -21,12 +21,12 @@ server.addHook('onRequest', (request, _reply, done) => {
   done();
 });
 
-server.get('/', async (_request, _reply) => {
-  return { count: members.length };
+server.get('/', async (_request, reply) => {
+  reply.send({count: members.length});
 });
 
 server.get('/member', async (_request, reply) => {
-  return reply.send(members);
+  reply.send(members);
 });
 
 server.addContentTypeParser('application/n-quads', { parseAs: 'string' }, function (request, body, done) {
@@ -51,7 +51,7 @@ server.post('/member', async (request, reply) => {
     reply.statusCode = 201;
   }
 
-  return '';
+  reply.send('');
 });
 
 async function closeGracefully(signal: any) {

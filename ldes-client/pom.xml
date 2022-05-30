@@ -14,7 +14,7 @@
     <artifactId>ldes-client</artifactId>
 
     <dependencies>
-		<!-- ############################################################## -->
+        <!-- ############################################################## -->
 		<!-- JSON & RDF -->
 		<!-- ############################################################## -->
         <dependency>
@@ -25,7 +25,7 @@
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.json</artifactId>
         </dependency>
-        <dependency>
+		<dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>apache-jena-libs</artifactId>
             <type>pom</type>

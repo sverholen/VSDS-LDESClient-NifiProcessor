@@ -1,9 +1,19 @@
 version: '3.3'
 services:
   ldes-client:
-    ports:
-      - '8443:8443'
-    environment:
-      - SINGLE_USER_CREDENTIALS_USERNAME=admin
-      - SINGLE_USER_CREDENTIALS_PASSWORD=ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB
+    env_file:
+      - ./config.local.env
+    container_name: ldes-client
     image: ldes-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8443:8443"
+    networks:
+      - ldes
+
+networks:
+  ldes:
+    driver: bridge
+    
